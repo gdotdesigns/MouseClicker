@@ -19,7 +19,6 @@ public class GUI {
                 int var = Integer.parseInt(textField.getText());
             }
         });
-        System.out.println();
         label.setPreferredSize(new Dimension(300,100));
         frame.getContentPane().add(label,BorderLayout.WEST);
         frame.getContentPane().add(textField,BorderLayout.CENTER);
