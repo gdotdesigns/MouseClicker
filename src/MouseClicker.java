@@ -8,7 +8,5 @@ public class MouseClicker {
 
         wit.createWindow();
 
-
-
     }
 }

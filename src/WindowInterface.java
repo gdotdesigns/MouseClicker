@@ -8,6 +8,8 @@ public class WindowInterface {
     JTextField textField;
     int clickDelay;
     RobotClicker robotClicker;
+    String buttonText = "Start";
+    JButton startStop;
 
     public void createWindow(){
         JFrame frame = new JFrame("Mouse Clicker");
@@ -15,7 +17,7 @@ public class WindowInterface {
         JLabel label = new JLabel("Time Interval(1sec ~ 100sec): ");
         textField = new JTextField(5);
         label.setPreferredSize(new Dimension(300,100));
-        JButton startStop = new JButton("Start");
+        startStop = new JButton(buttonText);
         frame.getContentPane().add(label,BorderLayout.WEST);
         frame.getContentPane().add(startStop,BorderLayout.EAST);
         frame.getContentPane().add(textField,BorderLayout.CENTER);
@@ -27,9 +29,18 @@ public class WindowInterface {
         startStop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                clickDelay = Integer.parseInt(textField.getText());
-                robotClicker = new RobotClicker();
-                robotClicker.startMouseClick(clickDelay);
+                if(startStop.getText() == "Start"){
+                    startStop.setText("Stop");
+                    clickDelay = Integer.parseInt(textField.getText());
+                    robotClicker = new RobotClicker();
+                    robotClicker.startMouseClick(clickDelay);
+
+                }
+
+                else{
+                    startStop.setText("Start");
+                    robotClicker.stopMouseClick();
+                }
 
             }
         });
