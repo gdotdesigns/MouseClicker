@@ -1,20 +1,33 @@
 import java.awt.*;
 import java.awt.event.InputEvent;
 
+
 public class RobotClicker {
 
-    public static void mouseClick( int a ) throws AWTException {
-
-        Robot robot = new Robot();
-        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        robot.delay(a);
-        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+    Robot robot;
+    boolean shouldStart = true;
 
 
+    {
+        try {
+            robot = new Robot();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void startMouseClick( int a ) {
 
-
+        while (shouldStart) {
+            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            robot.delay(100);
+            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+            robot.delay(a);
+        }
     }
 
 
+    public void stopMouseClick(){
+        shouldStart = false;
+    }
 }
