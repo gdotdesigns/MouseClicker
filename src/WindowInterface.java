@@ -3,18 +3,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class WindowInterface {
+public class WindowInterface implements Runnable {
 
-    JTextField textField;
-    int clickDelay;
-    RobotClicker robotClicker;
+    static JTextField textField;
+    static int clickDelay;
+    static RobotClicker robotClicker;
     String buttonText = "Start";
-    JButton startStop;
+    static JButton startStop;
+    Thread thread;
 
     public void createWindow(){
         JFrame frame = new JFrame("Mouse Clicker");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JLabel label = new JLabel("Time Interval(1sec ~ 100sec): ");
+        JLabel label = new JLabel("Time Interval (ms): ");
         textField = new JTextField(5);
         label.setPreferredSize(new Dimension(300,100));
         startStop = new JButton(buttonText);
@@ -29,21 +30,25 @@ public class WindowInterface {
         startStop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(startStop.getText() == "Start"){
-                    startStop.setText("Stop");
-                    clickDelay = Integer.parseInt(textField.getText());
-                    robotClicker = new RobotClicker();
-                    robotClicker.startMouseClick(clickDelay);
-
-                }
-
-                else{
-                    startStop.setText("Start");
-                    robotClicker.stopMouseClick();
-                }
-
+                thread = new Thread(new WindowInterface());
+                thread.start();
             }
         });
     }
 
+    @Override
+    public void run() {
+        if(startStop.getText() == "Start"){
+            startStop.setText("Stop");
+            clickDelay = Integer.parseInt(textField.getText());
+            robotClicker = new RobotClicker();
+            robotClicker.startMouseClick(clickDelay);
+        }
+
+        else{
+            startStop.setText("Start");
+            robotClicker.stopMouseClick();
+        }
+
+    }
 }
