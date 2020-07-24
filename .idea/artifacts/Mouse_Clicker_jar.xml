@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Mouse Clicker:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Mouse_Clicker_jar</output-path>
+    <root id="archive" name="Mouse Clicker.jar">
+      <element id="module-output" name="Mouse Clicker" />
+    </root>
+  </artifact>
+</component>
