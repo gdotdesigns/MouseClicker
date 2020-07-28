@@ -8,15 +8,17 @@ public class WindowInterface implements Runnable {
     static JTextField textField;
     static int clickDelay;
     static RobotClicker robotClicker;
-    String buttonText = "Start";
+    static String buttonText = "Start";
     static JButton startStop;
-    Thread thread;
+    static Thread thread;
 
-    public void createWindow(){
+    public static void createWindow(){
         JFrame frame = new JFrame("Mouse Clicker");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JLabel label = new JLabel("Time Interval (ms): ");
-        textField = new JTextField(5);
+        frame.setAlwaysOnTop(true);
+        frame.setResizable(false);
+        JLabel label = new JLabel("Time Interval (sec): ");
+        textField = new JTextField("1",5);
         label.setPreferredSize(new Dimension(300,100));
         startStop = new JButton(buttonText);
         frame.getContentPane().add(label,BorderLayout.WEST);
@@ -30,8 +32,10 @@ public class WindowInterface implements Runnable {
         startStop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                thread = new Thread(new WindowInterface());
-                thread.start();
+
+                    thread = new Thread(new WindowInterface());
+                    thread.start();
+
             }
         });
     }
@@ -40,7 +44,7 @@ public class WindowInterface implements Runnable {
     public void run() {
         if(startStop.getText() == "Start"){
             startStop.setText("Stop");
-            clickDelay = Integer.parseInt(textField.getText());
+            clickDelay = 1000 * (Integer.parseInt(textField.getText()));
             robotClicker = new RobotClicker();
             robotClicker.startMouseClick(clickDelay);
         }
